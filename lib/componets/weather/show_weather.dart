@@ -6,7 +6,8 @@ import '../../model/weathe_model.dart';
 import '../../bloc/weather_bloc.dart';
 
 class ShowWeather extends StatelessWidget {
-  WeatherModel weather;
+  final WeatherModel weather;
+
   final city;
 
   ShowWeather(this.weather, this.city);

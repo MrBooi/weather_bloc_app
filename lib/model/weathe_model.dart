@@ -12,7 +12,7 @@ class WeatherModel {
   WeatherModel(
       {this.temp, this.pressure, this.humidity, this.tempMax, this.tempMin});
 
-  factory WeatherModel.fromJson(Map<String, dynamic> res) {
+  factory WeatherModel.fromJson(Map<String, dynamic> res) { 
     return WeatherModel(
         temp: res['temp'],
         pressure: res['pressure'],

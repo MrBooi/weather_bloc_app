@@ -1,37 +1,63 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_bloc_app/model/weathe_model.dart';
 
 import '../bloc/weather_bloc.dart';
 
 import '../componets/weather/show_weather.dart';
 
-class SearchPage extends StatelessWidget {
-  final cityController = TextEditingController();
+class SearchPage extends StatefulWidget {
+  @override
+  _SearchPageState createState() => _SearchPageState();
+}
+
+class _SearchPageState extends State<SearchPage> {
+  var cityController = TextEditingController();
+  WeatherModel weather;
+
   var weatherBloc;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     weatherBloc = BlocProvider.of<WeatherBloc>(context);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        buildLogo(),
-        BlocBuilder<WeatherBloc, WeatherState>(
-          builder: (context, state) {
-            if (state is WeatherIsNotSearched)
-              return buildTextField();
-            else if (state is WeatherIsLoading)
-              return Center(
-                child: CupertinoActivityIndicator(),
-              );
-            else if (state is WeatherIsLoaded)
-              return ShowWeather(state.getWeather,cityController.text.trim());
-            else
-              return Text('Error');
-          },
-        )
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          buildLogo(),
+          BlocBuilder<WeatherBloc, WeatherState>(
+            builder: (context, state) {
+              if (state is WeatherIsNotSearched)
+                return buildTextField();
+              else if (state is WeatherIsLoading)
+                return Center(
+                  child: CupertinoActivityIndicator(),
+                );
+              else if (state is WeatherIsLoaded) {
+                print('------------${state.getWeather}----------------');
+                return ShowWeather(state.getWeather, cityController.text);
+              } else
+                return Center(
+                  child: Text(
+                    'Error',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                );
+            },
+          )
+        ],
+      ),
     );
   }
 
@@ -46,6 +72,7 @@ class SearchPage extends StatelessWidget {
   }
 
   Widget buildTextField() {
+    // var weatherBloc = BlocProvider.of<WeatherBloc>(context);
     return Container(
       padding: EdgeInsets.only(
         left: 32,
