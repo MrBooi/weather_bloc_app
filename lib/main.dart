@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import './bloc/weather_bloc.dart';
+import './provider/weather.dart';
 
 import './pages/search.dart';
 
@@ -8,11 +12,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: SearchPage(),
-    );
+        title: 'Weather Bloc App',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.grey[900],
+          body: BlocProvider(
+            create: (context) => WeatherBloc(WeatherProvider()),
+            child: SearchPage(),
+          ),
+        ));
   }
 }

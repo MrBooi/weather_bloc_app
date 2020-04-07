@@ -34,6 +34,8 @@ class WeatherIsLoading extends WeatherState {}
 class WeatherIsLoaded extends WeatherState {
   final _weather;
 
+  WeatherModel get getWeather => _weather;
+
   WeatherIsLoaded(this._weather);
 
   @override
